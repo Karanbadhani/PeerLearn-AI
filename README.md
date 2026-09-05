@@ -1,4 +1,4 @@
-# PeerLearn AI - Advanced SIH Prototype
+# EDUNEXA - Advanced SIH Prototype
 
 This is a self-contained frontend prototype designed for quick SIH demonstration.
 
