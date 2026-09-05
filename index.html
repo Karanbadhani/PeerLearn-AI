@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PeerLearn AI - Advanced SIH Prototype</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="toast" class="toast"></div>
+
+  <header class="topbar">
+    <div class="brand" onclick="navigate('home')">
+      <div class="brand-mark">P</div>
+      <div>
+        <div class="brand-title">PeerLearn AI</div>
+        <div class="brand-sub">AI + Human Peer Learning</div>
+      </div>
+    </div>
+
+    <nav class="desktop-nav">
+      <button data-route="home">Home</button>
+      <button data-route="discover">Discover</button>
+      <button data-route="progress">Progress</button>
+      <button data-route="ai">AI Companion</button>
+    </nav>
+
+    <div class="top-actions" id="guestActions">
+      <button class="btn ghost" onclick="openAuth('login')">Login</button>
+      <button class="btn primary" onclick="openAuth('signup')">Get Started</button>
+    </div>
+
+    <div class="user-menu hidden" id="userActions">
+      <div class="mini-user" onclick="navigate('dashboard')">
+        <div class="avatar sm" id="topAvatar">U</div>
+        <div class="mini-user-copy">
+          <strong id="topUserName">Student</strong>
+          <span id="topUserRole">Learner</span>
+        </div>
+      </div>
+      <button class="btn ghost" onclick="logout()">Logout</button>
+    </div>
+
+    <button class="mobile-menu-btn" onclick="toggleMobileNav()">☰</button>
+  </header>
+
+  <div class="mobile-nav hidden" id="mobileNav">
+    <button onclick="navigate('home');toggleMobileNav()">Home</button>
+    <button onclick="navigate('discover');toggleMobileNav()">Discover</button>
+    <button onclick="navigate('progress');toggleMobileNav()">Progress</button>
+    <button onclick="navigate('ai');toggleMobileNav()">AI Companion</button>
+    <button onclick="navigate('dashboard');toggleMobileNav()">Dashboard</button>
+  </div>
+
+  <main>
+    <!-- HOME -->
+    <section class="page active" id="page-home">
+      <div class="hero">
+        <div class="hero-content">
+          <div class="eyebrow">Built for Smart India Hackathon</div>
+          <h1>Understand the learning gap. <span>Find the right peer.</span> Improve continuously.</h1>
+          <p>PeerLearn AI combines peer-to-peer learning with NLP, machine learning and an LLM-powered learning companion.</p>
+
+          <div class="hero-search">
+            <input id="heroNeed" placeholder="Try: I know DSA basics but I am weak in Graphs and need help in Hindi" />
+            <button class="btn primary" onclick="runSmartSearch('heroNeed')">Find My Best Peer</button>
+          </div>
+
+          <div class="quick-pills">
+            <span>NLP Smart Search</span>
+            <span>ML Tutor Matching</span>
+            <span>LLM Learning Companion</span>
+            <span>Skill Verification</span>
+          </div>
+
+          <div class="hero-cta">
+            <button class="btn primary large" onclick="openAuth('signup')">Create Free Profile</button>
+            <button class="btn ghost large" onclick="navigate('discover')">Explore Demo Tutors</button>
+          </div>
+        </div>
+
+        <div class="hero-panel glass">
+          <div class="panel-head">
+            <div>
+              <div class="eyebrow small">LIVE DEMO PROFILE</div>
+              <h3>Adaptive Learning Snapshot</h3>
+            </div>
+            <span class="status-dot">AI Active</span>
+          </div>
+
+          <div class="metric-grid">
+            <div class="metric">
+              <span>Overall Progress</span>
+              <strong>68%</strong>
+              <small>+12% this month</small>
+            </div>
+            <div class="metric">
+              <span>Weak Topics</span>
+              <strong>2</strong>
+              <small>Graphs, Recursion</small>
+            </div>
+            <div class="metric">
+              <span>Best Match</span>
+              <strong>94%</strong>
+              <small>Rahul Sharma</small>
+            </div>
+            <div class="metric">
+              <span>Sessions</span>
+              <strong>07</strong>
+              <small>5 completed</small>
+            </div>
+          </div>
+
+          <div class="recommend-card">
+            <div class="rec-icon">✨</div>
+            <div>
+              <strong>AI Recommendation</strong>
+              <p>Focus on Graphs before moving to advanced Trees.</p>
+            </div>
+            <button onclick="navigate('progress')">View</button>
+          </div>
+        </div>
+      </div>
+
+      <section class="section container">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">WHY THIS IS DIFFERENT</div>
+            <h2>Not just a tutor-finding website</h2>
+          </div>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="icon purple">🧠</div>
+            <h3>Understands your real need</h3>
+            <p>Students describe their problem naturally. NLP extracts topic, level, language and learning intent.</p>
+          </article>
+          <article class="feature-card">
+            <div class="icon blue">🎯</div>
+            <h3>Matches the right peer</h3>
+            <p>ML ranks tutors by exact topic fit, proficiency, teaching suitability, rating and availability.</p>
+          </article>
+          <article class="feature-card">
+            <div class="icon green">📈</div>
+            <h3>Adapts after every session</h3>
+            <p>Progress is updated, learning gaps are detected and the next recommendation changes automatically.</p>
+          </article>
+          <article class="feature-card">
+            <div class="icon orange">✨</div>
+            <h3>AI Learning Companion</h3>
+            <p>The LLM explains doubts, creates quizzes, summarizes sessions and suggests next steps.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section soft-bg">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">HOW IT WORKS</div>
+              <h2>One connected AI learning journey</h2>
+            </div>
+          </div>
+          <div class="flow-grid">
+            <div class="flow-card"><span>01</span><strong>Describe Need</strong><p>Write your learning problem naturally.</p></div>
+            <div class="flow-card"><span>02</span><strong>NLP Understands</strong><p>Topic, level, language and intent are extracted.</p></div>
+            <div class="flow-card"><span>03</span><strong>ML Detects Gap</strong><p>Your weak concepts are identified.</p></div>
+            <div class="flow-card"><span>04</span><strong>ML Matches Peer</strong><p>Verified peers are ranked by fit.</p></div>
+            <div class="flow-card"><span>05</span><strong>Peer Session</strong><p>Learn from the selected student tutor.</p></div>
+            <div class="flow-card"><span>06</span><strong>LLM Follow-up</strong><p>Get summary, quiz and next-step guidance.</p></div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- DISCOVER -->
+    <section class="page" id="page-discover">
+      <div class="page-banner container">
+        <div>
+          <div class="eyebrow">DISCOVER PEERS</div>
+          <h1 class="page-title">Find a peer who matches your learning style</h1>
+          <p>Search by subject, topic, language, level or simply describe your problem.</p>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="discover-layout">
+          <aside class="filter-panel card">
+            <h3>Smart Filters</h3>
+            <label>Subject</label>
+            <select id="filterSubject" onchange="applyTutorFilters()">
+              <option value="">All subjects</option>
+              <option>DSA</option>
+              <option>C++</option>
+              <option>Python</option>
+              <option>Web Development</option>
+            </select>
+
+            <label>Language</label>
+            <select id="filterLanguage" onchange="applyTutorFilters()">
+              <option value="">Any language</option>
+              <option>Hindi</option>
+              <option>English</option>
+            </select>
+
+            <label>Minimum Rating</label>
+            <select id="filterRating" onchange="applyTutorFilters()">
+              <option value="0">Any rating</option>
+              <option value="4.5">4.5+</option>
+              <option value="4.8">4.8+</option>
+            </select>
+
+            <button class="btn ghost full" onclick="resetFilters()">Reset Filters</button>
+
+            <div class="divider"></div>
+            <h4>AI Search</h4>
+            <textarea id="discoverNeed" rows="4" placeholder="Example: I need a beginner-friendly Graphs tutor in Hindi"></textarea>
+            <button class="btn primary full" onclick="runSmartSearch('discoverNeed')">Analyze & Match</button>
+          </aside>
+
+          <section>
+            <div class="result-head">
+              <div>
+                <h3 id="resultTitle">Recommended Peer Tutors</h3>
+                <p id="resultInfo">Ranked using skill fit, rating, availability and teaching suitability.</p>
+              </div>
+              <div class="sort-chip">AI Ranked</div>
+            </div>
+            <div id="tutorGrid" class="tutor-grid"></div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <!-- DASHBOARD -->
+    <section class="page" id="page-dashboard">
+      <div class="container dashboard-wrap">
+        <div class="dashboard-head">
+          <div>
+            <div class="eyebrow">PERSONAL DASHBOARD</div>
+            <h1 class="page-title">Welcome, <span id="dashName">Student</span></h1>
+            <p>Your learning, teaching and AI recommendations in one place.</p>
+          </div>
+          <button class="btn primary" onclick="openProfileEditor()">Edit Profile</button>
+        </div>
+
+        <div class="dash-metrics">
+          <div class="dash-stat"><span>Learning Goal</span><strong id="dashGoal">DSA</strong></div>
+          <div class="dash-stat"><span>Current Level</span><strong id="dashLevel">Beginner</strong></div>
+          <div class="dash-stat"><span>Upcoming Sessions</span><strong id="bookingCount">0</strong></div>
+          <div class="dash-stat"><span>Tutor Status</span><strong id="tutorStatus">Not Verified</strong></div>
+        </div>
+
+        <div class="dashboard-grid">
+          <div class="card">
+            <div class="card-head"><h3>Upcoming Sessions</h3><button class="link-btn" onclick="navigate('discover')">Find Tutor</button></div>
+            <div id="bookingList" class="stack-list"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><h3>Become a Verified Peer Tutor</h3></div>
+            <p>Take a quick demo proficiency test and unlock a verified tutor badge.</p>
+            <button class="btn primary" onclick="openVerification()">Take Verification Test</button>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><h3>AI Recommendation</h3></div>
+            <div class="ai-recommendation">
+              <div class="icon purple">✨</div>
+              <div>
+                <strong>Work on Graph Traversal</strong>
+                <p>Based on your current progress, Graphs is your weakest DSA topic.</p>
+              </div>
+            </div>
+            <button class="btn ghost full" onclick="navigate('progress')">View Learning Gaps</button>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><h3>Quick AI Actions</h3></div>
+            <div class="quick-actions">
+              <button onclick="openAIWithPrompt('Explain BFS in simple words')">Explain a concept</button>
+              <button onclick="openAIWithPrompt('Create a 5-question quiz on Graphs')">Generate quiz</button>
+              <button onclick="openAIWithPrompt('Create a 7-day DSA study plan')">Create study plan</button>
+              <button onclick="openAIWithPrompt('Give me a session summary for BFS and DFS')">Session summary</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROGRESS -->
+    <section class="page" id="page-progress">
+      <div class="container page-banner">
+        <div>
+          <div class="eyebrow">ADAPTIVE LEARNING</div>
+          <h1 class="page-title">Learning Gap Dashboard</h1>
+          <p>Your learning profile changes as your quiz scores and session outcomes improve.</p>
+        </div>
+      </div>
+
+      <div class="container progress-layout">
+        <div class="card">
+          <div class="card-head">
+            <h3>DSA Skill Map</h3>
+            <span class="status-dot blue">ML Analysis</span>
+          </div>
+          <div id="skillProgress"></div>
+        </div>
+
+        <div class="card recommendation-big">
+          <div class="eyebrow">NEXT BEST ACTION</div>
+          <h2>Focus on Graphs</h2>
+          <p>Your current score suggests you should strengthen Graph Traversal before moving to advanced Trees.</p>
+          <div class="recommend-box">
+            <strong>Recommended Peer</strong>
+            <span>Rahul Sharma • 94% Match • Hindi + English</span>
+          </div>
+          <div class="button-row">
+            <button class="btn primary" onclick="bookTutorById(1)">Book Rahul</button>
+            <button class="btn ghost" onclick="openAIWithPrompt('Create a beginner Graphs practice quiz')">Practice with AI</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI -->
+    <section class="page" id="page-ai">
+      <div class="container ai-page">
+        <div class="ai-sidebar">
+          <div class="eyebrow">LLM LEARNING COMPANION</div>
+          <h1 class="page-title">Ask, practice, revise.</h1>
+          <p>This prototype simulates the LLM experience. Connect Gemini/OpenAI API later for real AI responses.</p>
+
+          <div class="prompt-buttons">
+            <button onclick="setAIPrompt('Explain recursion in C++ like I am a beginner.')">Explain Recursion</button>
+            <button onclick="setAIPrompt('Create 5 MCQs on BFS and DFS.')">Generate Quiz</button>
+            <button onclick="setAIPrompt('Make a 7-day beginner DSA learning plan.')">Study Plan</button>
+            <button onclick="setAIPrompt('Summarize a session on Graph Traversal and suggest next steps.')">Session Summary</button>
+          </div>
+        </div>
+
+        <div class="chat-shell">
+          <div class="chat-head">
+            <div>
+              <strong>PeerLearn AI Companion</strong>
+              <span>Demo LLM Assistant</span>
+            </div>
+            <button class="btn ghost small" onclick="clearChat()">Clear</button>
+          </div>
+          <div class="chat-body" id="chatBody">
+            <div class="message bot">
+              <div class="bubble">Hi! Tell me what you are struggling with. I can explain a concept, create a quiz, make a study plan or summarize a learning session.</div>
+            </div>
+          </div>
+          <div class="chat-compose">
+            <textarea id="aiInput" rows="2" placeholder="Ask your learning question..."></textarea>
+            <button class="btn primary" onclick="sendAIMessage()">Send</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- AUTH MODAL -->
+  <div class="modal" id="authModal">
+    <div class="modal-card auth-card">
+      <button class="modal-close" onclick="closeModal('authModal')">×</button>
+      <div class="auth-tabs">
+        <button id="tabLogin" onclick="switchAuth('login')">Login</button>
+        <button id="tabSignup" onclick="switchAuth('signup')">Sign Up</button>
+      </div>
+
+      <form id="loginForm" class="form-stack" onsubmit="handleLogin(event)">
+        <h2>Welcome back</h2>
+        <p>Use your account or the demo account below.</p>
+        <label>Email</label>
+        <input id="loginEmail" type="email" required placeholder="you@example.com">
+        <label>Password</label>
+        <input id="loginPassword" type="password" required placeholder="••••••••">
+        <button class="btn primary full" type="submit">Login</button>
+        <div class="demo-box">
+          <strong>Demo Login</strong>
+          <span>Email: demo@peerlearn.ai</span>
+          <span>Password: demo123</span>
+          <button type="button" onclick="fillDemoLogin()">Use Demo Account</button>
+        </div>
+      </form>
+
+      <form id="signupForm" class="form-stack hidden" onsubmit="handleSignup(event)">
+        <h2>Create your profile</h2>
+        <label>Full Name</label>
+        <input id="signupName" required placeholder="Your name">
+        <label>Email</label>
+        <input id="signupEmail" type="email" required placeholder="you@example.com">
+        <label>Password</label>
+        <input id="signupPassword" type="password" minlength="4" required placeholder="Minimum 4 characters">
+        <label>Primary Learning Goal</label>
+        <input id="signupGoal" required placeholder="Example: DSA">
+        <label>Current Level</label>
+        <select id="signupLevel">
+          <option>Beginner</option>
+          <option>Intermediate</option>
+          <option>Advanced</option>
+        </select>
+        <button class="btn primary full" type="submit">Create Account</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- BOOKING MODAL -->
+  <div class="modal" id="bookingModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeModal('bookingModal')">×</button>
+      <div id="bookingTutorSummary"></div>
+      <form class="form-stack" onsubmit="confirmBooking(event)">
+        <label>Date</label>
+        <input id="bookingDate" type="date" required>
+        <label>Time</label>
+        <select id="bookingTime" required>
+          <option value="">Select time</option>
+          <option>5:00 PM</option>
+          <option>6:00 PM</option>
+          <option>7:00 PM</option>
+        </select>
+        <label>Session Type</label>
+        <select id="bookingType">
+          <option>30 min Focus Session</option>
+          <option>60 min Deep Learning Session</option>
+        </select>
+        <label>Your specific doubt</label>
+        <textarea id="bookingDoubt" rows="3" placeholder="Example: I struggle with BFS traversal"></textarea>
+        <button class="btn primary full" type="submit">Confirm Session</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- VERIFY MODAL -->
+  <div class="modal" id="verifyModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeModal('verifyModal')">×</button>
+      <div class="eyebrow">SKILL VERIFICATION</div>
+      <h2>DSA Proficiency Test</h2>
+      <p>Answer all 3 questions. Score 2/3 or more to unlock the verified badge.</p>
+      <form class="form-stack" onsubmit="submitVerification(event)">
+        <label>1. Which data structure is used by BFS?</label>
+        <select id="q1" required><option value="">Choose</option><option>Stack</option><option value="1">Queue</option><option>Heap</option></select>
+        <label>2. Which traversal uses a stack or recursion?</label>
+        <select id="q2" required><option value="">Choose</option><option value="1">DFS</option><option>BFS</option><option>Binary Search</option></select>
+        <label>3. Average lookup time in a hash table is usually?</label>
+        <select id="q3" required><option value="">Choose</option><option value="1">O(1)</option><option>O(n²)</option><option>O(log n!)</option></select>
+        <button class="btn primary full" type="submit">Submit Test</button>
+      </form>
+      <div id="verifyResult"></div>
+    </div>
+  </div>
+
+  <!-- PROFILE EDITOR -->
+  <div class="modal" id="profileModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeModal('profileModal')">×</button>
+      <h2>Edit Profile</h2>
+      <form class="form-stack" onsubmit="saveProfile(event)">
+        <label>Name</label><input id="profileName" required>
+        <label>Learning Goal</label><input id="profileGoal" required>
+        <label>Current Level</label>
+        <select id="profileLevel"><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select>
+        <label>Skills You Can Teach</label><input id="profileTeach" placeholder="Example: C++, Python">
+        <button class="btn primary full" type="submit">Save Changes</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
