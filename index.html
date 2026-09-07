@@ -3,18 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EDUNEXA - Advanced SIH Prototype</title>
+  <title>EDUNEXA | AI-Powered Peer Learning</title>
+  <meta name="description" content="EDUNEXA - AI-powered peer-to-peer learning platform">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <div class="noise"></div>
   <div id="toast" class="toast"></div>
 
   <header class="topbar">
     <div class="brand" onclick="navigate('home')">
-      <div class="brand-mark">P</div>
+      <div class="brand-mark">E<span>+</span></div>
       <div>
         <div class="brand-title">EDUNEXA</div>
         <div class="brand-sub">AI + Human Peer Learning</div>
@@ -23,17 +25,19 @@
 
     <nav class="desktop-nav">
       <button data-route="home">Home</button>
-      <button data-route="discover">Discover</button>
-      <button data-route="progress">Progress</button>
-      <button data-route="ai">AI Companion</button>
+      <button data-route="discover">Find Peers</button>
+      <button data-route="progress">My Learning</button>
+      <button data-route="ai">Ask EDUNEXA</button>
+      <button data-route="sessions">Sessions</button>
     </nav>
 
     <div class="top-actions" id="guestActions">
       <button class="btn ghost" onclick="openAuth('login')">Login</button>
-      <button class="btn primary" onclick="openAuth('signup')">Get Started</button>
+      <button class="btn primary" onclick="openAuth('signup')">Start Learning</button>
     </div>
 
     <div class="user-menu hidden" id="userActions">
+      <button class="icon-btn notify-btn" onclick="openNotifications()">🔔<span id="notifDot" class="notif-dot"></span></button>
       <div class="mini-user" onclick="navigate('dashboard')">
         <div class="avatar sm" id="topAvatar">U</div>
         <div class="mini-user-copy">
@@ -49,129 +53,142 @@
 
   <div class="mobile-nav hidden" id="mobileNav">
     <button onclick="navigate('home');toggleMobileNav()">Home</button>
-    <button onclick="navigate('discover');toggleMobileNav()">Discover</button>
-    <button onclick="navigate('progress');toggleMobileNav()">Progress</button>
-    <button onclick="navigate('ai');toggleMobileNav()">AI Companion</button>
+    <button onclick="navigate('discover');toggleMobileNav()">Find Peers</button>
+    <button onclick="navigate('progress');toggleMobileNav()">My Learning</button>
+    <button onclick="navigate('ai');toggleMobileNav()">Ask EDUNEXA</button>
+    <button onclick="navigate('sessions');toggleMobileNav()">Sessions</button>
     <button onclick="navigate('dashboard');toggleMobileNav()">Dashboard</button>
   </div>
 
   <main>
     <!-- HOME -->
     <section class="page active" id="page-home">
-      <div class="hero">
-        <div class="hero-content">
-          <div class="eyebrow">Built for Smart India Hackathon</div>
-          <h1>Understand the learning gap. <span>Find the right peer.</span> Improve continuously.</h1>
-          <p>EDUNEXA combines peer-to-peer learning with NLP, machine learning and an LLM-powered learning companion.</p>
+      <section class="hero-wrap">
+        <div class="hero-orb one"></div>
+        <div class="hero-orb two"></div>
+        <div class="container hero">
+          <div class="hero-content">
+            <div class="eyebrow"><span class="pulse"></span> AI-powered adaptive peer learning</div>
+            <h1>Don't just find a tutor. <span>Find the right peer for you.</span></h1>
+            <p>EDUNEXA understands what you're struggling with, identifies your learning gap, matches you with a verified peer, and adapts your next learning step using AI.</p>
 
-          <div class="hero-search">
-            <input id="heroNeed" placeholder="Try: I know DSA basics but I am weak in Graphs and need help in Hindi" />
-            <button class="btn primary" onclick="runSmartSearch('heroNeed')">Find My Best Peer</button>
+            <div class="hero-search">
+              <div class="search-icon">✦</div>
+              <input id="heroNeed" placeholder="Try: I know DSA basics but Graphs still confuse me..." />
+              <button class="btn primary" onclick="runSmartSearch('heroNeed')">Find My Match</button>
+            </div>
+
+            <div class="example-query">
+              <span>Try:</span>
+              <button onclick="fillHero('I need a beginner-friendly Graphs tutor in Hindi')">Graphs in Hindi</button>
+              <button onclick="fillHero('I understand Python basics but I struggle with functions')">Python Functions</button>
+              <button onclick="fillHero('I want to learn C++ OOP from basics')">C++ OOP</button>
+            </div>
+
+            <div class="hero-cta">
+              <button class="btn primary large" onclick="openAuth('signup')">Create Learning Profile</button>
+              <button class="btn glass-btn large" onclick="navigate('discover')">Explore Verified Peers</button>
+            </div>
+
+            <div class="trust-strip">
+              <div><strong>24+</strong><span>Skill Tracks</span></div>
+              <div><strong>4.8★</strong><span>Avg. Peer Rating</span></div>
+              <div><strong>AI</strong><span>Personalized Matching</span></div>
+            </div>
           </div>
 
-          <div class="quick-pills">
-            <span>NLP Smart Search</span>
-            <span>ML Tutor Matching</span>
-            <span>LLM Learning Companion</span>
-            <span>Skill Verification</span>
-          </div>
+          <div class="hero-panel">
+            <div class="glass-panel profile-snapshot">
+              <div class="panel-head">
+                <div>
+                  <div class="eyebrow small">YOUR AI LEARNING PROFILE</div>
+                  <h3>Adaptive Snapshot</h3>
+                </div>
+                <span class="status-dot">● AI Active</span>
+              </div>
 
-          <div class="hero-cta">
-            <button class="btn primary large" onclick="openAuth('signup')">Create Free Profile</button>
-            <button class="btn ghost large" onclick="navigate('discover')">Explore Demo Tutors</button>
+              <div class="radar-wrap">
+                <div class="radar-circle"><div class="radar-value">68%</div><span>Overall</span></div>
+                <div class="insight-card">
+                  <small>AI INSIGHT</small>
+                  <strong>Graphs need attention</strong>
+                  <p>Your graph traversal score is lower than your other DSA topics.</p>
+                </div>
+              </div>
+
+              <div class="mini-progress">
+                <div><span>Arrays</span><b>90%</b><i><em style="width:90%"></em></i></div>
+                <div><span>Recursion</span><b>43%</b><i><em style="width:43%"></em></i></div>
+                <div><span>Graphs</span><b>35%</b><i><em style="width:35%"></em></i></div>
+              </div>
+
+              <div class="best-match-card">
+                <div class="avatar">RS</div>
+                <div>
+                  <small>BEST PEER MATCH</small>
+                  <strong>Rahul Sharma</strong>
+                  <span>DSA • Graphs • Hindi</span>
+                </div>
+                <div class="match-ring">94%</div>
+              </div>
+            </div>
           </div>
         </div>
-
-        <div class="hero-panel glass">
-          <div class="panel-head">
-            <div>
-              <div class="eyebrow small">LIVE DEMO PROFILE</div>
-              <h3>Adaptive Learning Snapshot</h3>
-            </div>
-            <span class="status-dot">AI Active</span>
-          </div>
-
-          <div class="metric-grid">
-            <div class="metric">
-              <span>Overall Progress</span>
-              <strong>68%</strong>
-              <small>+12% this month</small>
-            </div>
-            <div class="metric">
-              <span>Weak Topics</span>
-              <strong>2</strong>
-              <small>Graphs, Recursion</small>
-            </div>
-            <div class="metric">
-              <span>Best Match</span>
-              <strong>94%</strong>
-              <small>Rahul Sharma</small>
-            </div>
-            <div class="metric">
-              <span>Sessions</span>
-              <strong>07</strong>
-              <small>5 completed</small>
-            </div>
-          </div>
-
-          <div class="recommend-card">
-            <div class="rec-icon">✨</div>
-            <div>
-              <strong>AI Recommendation</strong>
-              <p>Focus on Graphs before moving to advanced Trees.</p>
-            </div>
-            <button onclick="navigate('progress')">View</button>
-          </div>
-        </div>
-      </div>
+      </section>
 
       <section class="section container">
-        <div class="section-head">
+        <div class="section-title-row">
           <div>
-            <div class="eyebrow">WHY THIS IS DIFFERENT</div>
-            <h2>Not just a tutor-finding website</h2>
+            <div class="eyebrow">WHAT MAKES EDUNEXA DIFFERENT</div>
+            <h2>A complete learning loop, not a tutor directory</h2>
           </div>
         </div>
-
-        <div class="feature-grid">
+        <div class="feature-grid premium">
           <article class="feature-card">
             <div class="icon purple">🧠</div>
-            <h3>Understands your real need</h3>
-            <p>Students describe their problem naturally. NLP extracts topic, level, language and learning intent.</p>
+            <span class="feature-label">NLP</span>
+            <h3>Understand the real learning need</h3>
+            <p>Students describe their difficulty in normal language. EDUNEXA extracts subject, topic, level, language and intent.</p>
           </article>
           <article class="feature-card">
             <div class="icon blue">🎯</div>
-            <h3>Matches the right peer</h3>
-            <p>ML ranks tutors by exact topic fit, proficiency, teaching suitability, rating and availability.</p>
+            <span class="feature-label">ML</span>
+            <h3>Match by suitability, not just stars</h3>
+            <p>Match score considers exact skill fit, learner level, tutor proficiency, availability, language and previous outcomes.</p>
           </article>
           <article class="feature-card">
-            <div class="icon green">📈</div>
-            <h3>Adapts after every session</h3>
-            <p>Progress is updated, learning gaps are detected and the next recommendation changes automatically.</p>
+            <div class="icon green">✅</div>
+            <span class="feature-label">TRUST</span>
+            <h3>Verified student tutors</h3>
+            <p>Students prove their teaching skill through topic-wise proficiency tests and performance history.</p>
           </article>
           <article class="feature-card">
             <div class="icon orange">✨</div>
-            <h3>AI Learning Companion</h3>
-            <p>The LLM explains doubts, creates quizzes, summarizes sessions and suggests next steps.</p>
+            <span class="feature-label">LLM</span>
+            <h3>AI support before and after sessions</h3>
+            <p>Get explanations, personalized quizzes, study plans, session summaries and next-step suggestions.</p>
           </article>
         </div>
       </section>
 
-      <section class="section soft-bg">
+      <section class="section alt-section">
         <div class="container">
-          <div class="section-head">
+          <div class="section-title-row">
             <div>
-              <div class="eyebrow">HOW IT WORKS</div>
-              <h2>One connected AI learning journey</h2>
+              <div class="eyebrow">THE EDUNEXA LOOP</div>
+              <h2>Understand → Match → Learn → Measure → Adapt</h2>
             </div>
           </div>
-          <div class="flow-grid">
-            <div class="flow-card"><span>01</span><strong>Describe Need</strong><p>Write your learning problem naturally.</p></div>
-            <div class="flow-card"><span>02</span><strong>NLP Understands</strong><p>Topic, level, language and intent are extracted.</p></div>
-            <div class="flow-card"><span>03</span><strong>ML Detects Gap</strong><p>Your weak concepts are identified.</p></div>
-            <div class="flow-card"><span>04</span><strong>ML Matches Peer</strong><p>Verified peers are ranked by fit.</p></div>
-            <div class="flow-card"><span>05</span><strong>Peer Session</strong><p>Learn from the selected student tutor.</p></div>
-            <div class="flow-card"><span>06</span><strong>LLM Follow-up</strong><p>Get summary, quiz and next-step guidance.</p></div>
+          <div class="journey">
+            <div class="journey-step"><b>01</b><div><strong>Describe your problem</strong><span>Natural language input</span></div></div>
+            <div class="journey-line"></div>
+            <div class="journey-step"><b>02</b><div><strong>AI understands it</strong><span>Topic, level, intent</span></div></div>
+            <div class="journey-line"></div>
+            <div class="journey-step"><b>03</b><div><strong>Best peer is ranked</strong><span>ML match score</span></div></div>
+            <div class="journey-line"></div>
+            <div class="journey-step"><b>04</b><div><strong>Learn 1-to-1</strong><span>Focused peer session</span></div></div>
+            <div class="journey-line"></div>
+            <div class="journey-step"><b>05</b><div><strong>AI adapts next step</strong><span>Progress + feedback loop</span></div></div>
           </div>
         </div>
       </section>
@@ -179,18 +196,28 @@
 
     <!-- DISCOVER -->
     <section class="page" id="page-discover">
-      <div class="page-banner container">
+      <div class="container page-banner">
         <div>
-          <div class="eyebrow">DISCOVER PEERS</div>
-          <h1 class="page-title">Find a peer who matches your learning style</h1>
-          <p>Search by subject, topic, language, level or simply describe your problem.</p>
+          <div class="eyebrow">DISCOVER VERIFIED PEERS</div>
+          <h1 class="page-title">Find someone who matches the way you learn.</h1>
+          <p>Search manually or describe your learning problem and let EDUNEXA rank the best matches.</p>
         </div>
       </div>
 
       <div class="container">
+        <div class="smart-search-wide card">
+          <div class="smart-search-icon">✦</div>
+          <div>
+            <strong>AI Smart Search</strong>
+            <span>Describe what you need in your own words.</span>
+          </div>
+          <textarea id="discoverNeed" rows="2" placeholder="Example: I need someone beginner-friendly who can teach Graphs in Hindi"></textarea>
+          <button class="btn primary" onclick="runSmartSearch('discoverNeed')">Analyze My Need</button>
+        </div>
+
         <div class="discover-layout">
           <aside class="filter-panel card">
-            <h3>Smart Filters</h3>
+            <div class="filter-title"><h3>Filters</h3><button onclick="resetFilters()">Reset</button></div>
             <label>Subject</label>
             <select id="filterSubject" onchange="applyTutorFilters()">
               <option value="">All subjects</option>
@@ -199,36 +226,35 @@
               <option>Python</option>
               <option>Web Development</option>
             </select>
-
             <label>Language</label>
             <select id="filterLanguage" onchange="applyTutorFilters()">
               <option value="">Any language</option>
               <option>Hindi</option>
               <option>English</option>
             </select>
-
             <label>Minimum Rating</label>
             <select id="filterRating" onchange="applyTutorFilters()">
               <option value="0">Any rating</option>
               <option value="4.5">4.5+</option>
               <option value="4.8">4.8+</option>
             </select>
-
-            <button class="btn ghost full" onclick="resetFilters()">Reset Filters</button>
-
-            <div class="divider"></div>
-            <h4>AI Search</h4>
-            <textarea id="discoverNeed" rows="4" placeholder="Example: I need a beginner-friendly Graphs tutor in Hindi"></textarea>
-            <button class="btn primary full" onclick="runSmartSearch('discoverNeed')">Analyze & Match</button>
+            <label>Teaching Style</label>
+            <select id="filterStyle" onchange="applyTutorFilters()">
+              <option value="">Any style</option>
+              <option>Beginner Friendly</option>
+              <option>Concept First</option>
+              <option>Practice First</option>
+              <option>Visual Learning</option>
+            </select>
           </aside>
 
           <section>
             <div class="result-head">
               <div>
                 <h3 id="resultTitle">Recommended Peer Tutors</h3>
-                <p id="resultInfo">Ranked using skill fit, rating, availability and teaching suitability.</p>
+                <p id="resultInfo">Ranked using skill fit, learner level, proficiency, rating and availability.</p>
               </div>
-              <div class="sort-chip">AI Ranked</div>
+              <span class="sort-chip">✦ AI Ranked</span>
             </div>
             <div id="tutorGrid" class="tutor-grid"></div>
           </section>
@@ -241,52 +267,60 @@
       <div class="container dashboard-wrap">
         <div class="dashboard-head">
           <div>
-            <div class="eyebrow">PERSONAL DASHBOARD</div>
-            <h1 class="page-title">Welcome, <span id="dashName">Student</span></h1>
-            <p>Your learning, teaching and AI recommendations in one place.</p>
+            <div class="eyebrow">MY EDUNEXA</div>
+            <h1 class="page-title">Welcome back, <span id="dashName">Student</span> 👋</h1>
+            <p>Everything about your learning and teaching journey is here.</p>
           </div>
-          <button class="btn primary" onclick="openProfileEditor()">Edit Profile</button>
+          <div class="dashboard-actions">
+            <button class="btn ghost" onclick="openProfileEditor()">Edit Profile</button>
+            <button class="btn primary" onclick="navigate('discover')">Find a Peer</button>
+          </div>
         </div>
 
         <div class="dash-metrics">
-          <div class="dash-stat"><span>Learning Goal</span><strong id="dashGoal">DSA</strong></div>
-          <div class="dash-stat"><span>Current Level</span><strong id="dashLevel">Beginner</strong></div>
-          <div class="dash-stat"><span>Upcoming Sessions</span><strong id="bookingCount">0</strong></div>
-          <div class="dash-stat"><span>Tutor Status</span><strong id="tutorStatus">Not Verified</strong></div>
+          <div class="dash-stat highlight"><span>Learning Goal</span><strong id="dashGoal">DSA</strong><small>Current focus</small></div>
+          <div class="dash-stat"><span>Current Level</span><strong id="dashLevel">Beginner</strong><small>Adaptive profile</small></div>
+          <div class="dash-stat"><span>Upcoming Sessions</span><strong id="bookingCount">0</strong><small>Scheduled</small></div>
+          <div class="dash-stat"><span>Tutor Status</span><strong id="tutorStatus">Not Verified</strong><small>Teaching profile</small></div>
         </div>
 
         <div class="dashboard-grid">
-          <div class="card">
-            <div class="card-head"><h3>Upcoming Sessions</h3><button class="link-btn" onclick="navigate('discover')">Find Tutor</button></div>
+          <div class="card span-2">
+            <div class="card-head"><h3>Upcoming Sessions</h3><button class="link-btn" onclick="navigate('sessions')">View all</button></div>
             <div id="bookingList" class="stack-list"></div>
           </div>
 
           <div class="card">
-            <div class="card-head"><h3>Become a Verified Peer Tutor</h3></div>
-            <p>Take a quick demo proficiency test and unlock a verified tutor badge.</p>
-            <button class="btn primary" onclick="openVerification()">Take Verification Test</button>
-          </div>
-
-          <div class="card">
-            <div class="card-head"><h3>AI Recommendation</h3></div>
+            <div class="card-head"><h3>AI Recommendation</h3><span class="chip purple">Adaptive</span></div>
             <div class="ai-recommendation">
               <div class="icon purple">✨</div>
               <div>
                 <strong>Work on Graph Traversal</strong>
-                <p>Based on your current progress, Graphs is your weakest DSA topic.</p>
+                <p>Graphs is currently your weakest DSA topic. One focused session can improve your next recommendation.</p>
               </div>
             </div>
             <button class="btn ghost full" onclick="navigate('progress')">View Learning Gaps</button>
           </div>
 
           <div class="card">
+            <div class="card-head"><h3>Become a Verified Peer Tutor</h3><span class="chip green">Earn & Teach</span></div>
+            <p>Take a short skill assessment to unlock your verified tutor profile.</p>
+            <button class="btn primary full" onclick="openVerification()">Take Verification Test</button>
+          </div>
+
+          <div class="card span-2">
             <div class="card-head"><h3>Quick AI Actions</h3></div>
             <div class="quick-actions">
-              <button onclick="openAIWithPrompt('Explain BFS in simple words')">Explain a concept</button>
-              <button onclick="openAIWithPrompt('Create a 5-question quiz on Graphs')">Generate quiz</button>
-              <button onclick="openAIWithPrompt('Create a 7-day DSA study plan')">Create study plan</button>
-              <button onclick="openAIWithPrompt('Give me a session summary for BFS and DFS')">Session summary</button>
+              <button onclick="openAIWithPrompt('Explain BFS in simple words')"><span>🧠</span><b>Explain a concept</b><small>Simple, level-based explanation</small></button>
+              <button onclick="openAIWithPrompt('Create a 5-question quiz on Graphs')"><span>📝</span><b>Generate quiz</b><small>Topic-based practice</small></button>
+              <button onclick="openAIWithPrompt('Create a 7-day DSA study plan')"><span>🗓️</span><b>Create study plan</b><small>Personalized roadmap</small></button>
+              <button onclick="openAIWithPrompt('Give me a session summary for BFS and DFS')"><span>✨</span><b>Session summary</b><small>Revision + next step</small></button>
             </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><h3>Saved Peers</h3></div>
+            <div id="savedTutorList" class="saved-list"></div>
           </div>
         </div>
       </div>
@@ -296,9 +330,9 @@
     <section class="page" id="page-progress">
       <div class="container page-banner">
         <div>
-          <div class="eyebrow">ADAPTIVE LEARNING</div>
-          <h1 class="page-title">Learning Gap Dashboard</h1>
-          <p>Your learning profile changes as your quiz scores and session outcomes improve.</p>
+          <div class="eyebrow">ADAPTIVE LEARNING PROFILE</div>
+          <h1 class="page-title">Know exactly where you need help.</h1>
+          <p>Your learning profile updates using quizzes, session outcomes and feedback.</p>
         </div>
       </div>
 
@@ -306,7 +340,7 @@
         <div class="card">
           <div class="card-head">
             <h3>DSA Skill Map</h3>
-            <span class="status-dot blue">ML Analysis</span>
+            <span class="status-dot blue">● ML Analysis</span>
           </div>
           <div id="skillProgress"></div>
         </div>
@@ -314,14 +348,29 @@
         <div class="card recommendation-big">
           <div class="eyebrow">NEXT BEST ACTION</div>
           <h2>Focus on Graphs</h2>
-          <p>Your current score suggests you should strengthen Graph Traversal before moving to advanced Trees.</p>
+          <p>Your current score suggests that Graph Traversal should be strengthened before advanced Trees.</p>
           <div class="recommend-box">
             <strong>Recommended Peer</strong>
             <span>Rahul Sharma • 94% Match • Hindi + English</span>
           </div>
           <div class="button-row">
             <button class="btn primary" onclick="bookTutorById(1)">Book Rahul</button>
-            <button class="btn ghost" onclick="openAIWithPrompt('Create a beginner Graphs practice quiz')">Practice with AI</button>
+            <button class="btn glass-btn" onclick="openAIWithPrompt('Create a beginner Graphs practice quiz')">Practice with AI</button>
+          </div>
+        </div>
+
+        <div class="card span-2">
+          <div class="card-head"><h3>Your Adaptive Roadmap</h3><span class="chip purple">AI Generated</span></div>
+          <div class="roadmap">
+            <div class="roadmap-node done"><b>✓</b><div><strong>Arrays</strong><span>Completed</span></div></div>
+            <div class="roadmap-line done"></div>
+            <div class="roadmap-node done"><b>✓</b><div><strong>Linked List</strong><span>Completed</span></div></div>
+            <div class="roadmap-line"></div>
+            <div class="roadmap-node current"><b>3</b><div><strong>Graphs</strong><span>Current focus</span></div></div>
+            <div class="roadmap-line"></div>
+            <div class="roadmap-node"><b>4</b><div><strong>Trees</strong><span>Next</span></div></div>
+            <div class="roadmap-line"></div>
+            <div class="roadmap-node"><b>5</b><div><strong>Advanced DSA</strong><span>Future</span></div></div>
           </div>
         </div>
       </div>
@@ -331,23 +380,27 @@
     <section class="page" id="page-ai">
       <div class="container ai-page">
         <div class="ai-sidebar">
-          <div class="eyebrow">LLM LEARNING COMPANION</div>
-          <h1 class="page-title">Ask, practice, revise.</h1>
-          <p>This prototype simulates the LLM experience. Connect Gemini/OpenAI API later for real AI responses.</p>
-
+          <div class="eyebrow">ASK EDUNEXA</div>
+          <h1 class="page-title">Your AI learning companion.</h1>
+          <p>Use AI before and after peer sessions for explanations, quizzes, learning plans and revision.</p>
           <div class="prompt-buttons">
-            <button onclick="setAIPrompt('Explain recursion in C++ like I am a beginner.')">Explain Recursion</button>
-            <button onclick="setAIPrompt('Create 5 MCQs on BFS and DFS.')">Generate Quiz</button>
-            <button onclick="setAIPrompt('Make a 7-day beginner DSA learning plan.')">Study Plan</button>
-            <button onclick="setAIPrompt('Summarize a session on Graph Traversal and suggest next steps.')">Session Summary</button>
+            <button onclick="setAIPrompt('Explain recursion in C++ like I am a beginner.')"><span>🧠</span> Explain Recursion</button>
+            <button onclick="setAIPrompt('Create 5 MCQs on BFS and DFS.')"><span>📝</span> Generate Quiz</button>
+            <button onclick="setAIPrompt('Make a 7-day beginner DSA learning plan.')"><span>🗓️</span> Study Plan</button>
+            <button onclick="setAIPrompt('Summarize a session on Graph Traversal and suggest next steps.')"><span>✨</span> Session Summary</button>
+          </div>
+          <div class="ai-side-note">
+            <strong>Prototype note</strong>
+            <span>This demo uses simulated responses. A real LLM API can be connected later.</span>
           </div>
         </div>
 
         <div class="chat-shell">
           <div class="chat-head">
+            <div class="ai-avatar">E+</div>
             <div>
-              <strong>EDUNEXA Companion</strong>
-              <span>Demo LLM Assistant</span>
+              <strong>EDUNEXA AI</strong>
+              <span>Learning Companion • Online</span>
             </div>
             <button class="btn ghost small" onclick="clearChat()">Clear</button>
           </div>
@@ -357,18 +410,37 @@
             </div>
           </div>
           <div class="chat-compose">
-            <textarea id="aiInput" rows="2" placeholder="Ask your learning question..."></textarea>
+            <textarea id="aiInput" rows="2" placeholder="Ask EDUNEXA anything about your learning..."></textarea>
             <button class="btn primary" onclick="sendAIMessage()">Send</button>
           </div>
         </div>
       </div>
     </section>
+
+    <!-- SESSIONS -->
+    <section class="page" id="page-sessions">
+      <div class="container page-banner">
+        <div>
+          <div class="eyebrow">MY SESSIONS</div>
+          <h1 class="page-title">All your peer-learning sessions.</h1>
+          <p>Join upcoming sessions, review completed sessions, or practice before your next class.</p>
+        </div>
+      </div>
+      <div class="container">
+        <div class="session-tabs">
+          <button class="active" onclick="setSessionTab('upcoming',this)">Upcoming</button>
+          <button onclick="setSessionTab('completed',this)">Completed</button>
+        </div>
+        <div id="sessionsPageList" class="sessions-page-list"></div>
+      </div>
+    </section>
   </main>
 
-  <!-- AUTH MODAL -->
+  <!-- AUTH -->
   <div class="modal" id="authModal">
     <div class="modal-card auth-card">
       <button class="modal-close" onclick="closeModal('authModal')">×</button>
+      <div class="auth-brand"><div class="brand-mark">E<span>+</span></div><strong>EDUNEXA</strong></div>
       <div class="auth-tabs">
         <button id="tabLogin" onclick="switchAuth('login')">Login</button>
         <button id="tabSignup" onclick="switchAuth('signup')">Sign Up</button>
@@ -376,7 +448,7 @@
 
       <form id="loginForm" class="form-stack" onsubmit="handleLogin(event)">
         <h2>Welcome back</h2>
-        <p>Use your account or the demo account below.</p>
+        <p>Continue your learning journey.</p>
         <label>Email</label>
         <input id="loginEmail" type="email" required placeholder="you@example.com">
         <label>Password</label>
@@ -384,14 +456,14 @@
         <button class="btn primary full" type="submit">Login</button>
         <div class="demo-box">
           <strong>Demo Login</strong>
-          <span>Email: demo@peerlearn.ai</span>
+          <span>Email: demo@edunexa.ai</span>
           <span>Password: demo123</span>
           <button type="button" onclick="fillDemoLogin()">Use Demo Account</button>
         </div>
       </form>
 
       <form id="signupForm" class="form-stack hidden" onsubmit="handleSignup(event)">
-        <h2>Create your profile</h2>
+        <h2>Create your learning profile</h2>
         <label>Full Name</label>
         <input id="signupName" required placeholder="Your name">
         <label>Email</label>
@@ -401,36 +473,31 @@
         <label>Primary Learning Goal</label>
         <input id="signupGoal" required placeholder="Example: DSA">
         <label>Current Level</label>
-        <select id="signupLevel">
-          <option>Beginner</option>
-          <option>Intermediate</option>
-          <option>Advanced</option>
-        </select>
+        <select id="signupLevel"><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select>
         <button class="btn primary full" type="submit">Create Account</button>
       </form>
     </div>
   </div>
 
-  <!-- BOOKING MODAL -->
+  <!-- TUTOR PROFILE -->
+  <div class="modal" id="tutorModal">
+    <div class="modal-card wide-modal">
+      <button class="modal-close" onclick="closeModal('tutorModal')">×</button>
+      <div id="tutorProfileContent"></div>
+    </div>
+  </div>
+
+  <!-- BOOKING -->
   <div class="modal" id="bookingModal">
     <div class="modal-card">
       <button class="modal-close" onclick="closeModal('bookingModal')">×</button>
       <div id="bookingTutorSummary"></div>
       <form class="form-stack" onsubmit="confirmBooking(event)">
-        <label>Date</label>
-        <input id="bookingDate" type="date" required>
+        <label>Date</label><input id="bookingDate" type="date" required>
         <label>Time</label>
-        <select id="bookingTime" required>
-          <option value="">Select time</option>
-          <option>5:00 PM</option>
-          <option>6:00 PM</option>
-          <option>7:00 PM</option>
-        </select>
+        <select id="bookingTime" required><option value="">Select time</option><option>5:00 PM</option><option>6:00 PM</option><option>7:00 PM</option></select>
         <label>Session Type</label>
-        <select id="bookingType">
-          <option>30 min Focus Session</option>
-          <option>60 min Deep Learning Session</option>
-        </select>
+        <select id="bookingType"><option>30 min Focus Session</option><option>60 min Deep Learning Session</option></select>
         <label>Your specific doubt</label>
         <textarea id="bookingDoubt" rows="3" placeholder="Example: I struggle with BFS traversal"></textarea>
         <button class="btn primary full" type="submit">Confirm Session</button>
@@ -438,7 +505,7 @@
     </div>
   </div>
 
-  <!-- VERIFY MODAL -->
+  <!-- VERIFY -->
   <div class="modal" id="verifyModal">
     <div class="modal-card">
       <button class="modal-close" onclick="closeModal('verifyModal')">×</button>
@@ -458,7 +525,7 @@
     </div>
   </div>
 
-  <!-- PROFILE EDITOR -->
+  <!-- PROFILE -->
   <div class="modal" id="profileModal">
     <div class="modal-card">
       <button class="modal-close" onclick="closeModal('profileModal')">×</button>
@@ -471,6 +538,50 @@
         <label>Skills You Can Teach</label><input id="profileTeach" placeholder="Example: C++, Python">
         <button class="btn primary full" type="submit">Save Changes</button>
       </form>
+    </div>
+  </div>
+
+  <!-- NOTIFICATIONS -->
+  <div class="modal" id="notificationsModal">
+    <div class="modal-card small-modal">
+      <button class="modal-close" onclick="closeModal('notificationsModal')">×</button>
+      <h2>Notifications</h2>
+      <div id="notificationList" class="notification-list"></div>
+    </div>
+  </div>
+
+  <!-- LIVE ROOM -->
+  <div class="modal" id="roomModal">
+    <div class="modal-card room-modal">
+      <button class="modal-close light-close" onclick="closeModal('roomModal')">×</button>
+      <div class="room-shell">
+        <div class="room-top"><strong id="roomTitle">Live Peer Session</strong><span>● Connected</span></div>
+        <div class="video-stage">
+          <div class="video-tile main-video"><div class="video-avatar">RS</div><span>Peer Tutor</span></div>
+          <div class="video-tile self-video"><div class="video-avatar">YOU</div><span>You</span></div>
+        </div>
+        <div class="room-tools">
+          <button onclick="toggleRoomTool(this,'🎤','🔇')">🎤</button>
+          <button onclick="toggleRoomTool(this,'📹','🚫')">📹</button>
+          <button onclick="showToast('Screen share demo activated')">🖥️</button>
+          <button onclick="showToast('Shared notes opened')">📝</button>
+          <button class="end-call" onclick="endDemoSession()">📞 End</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REVIEW -->
+  <div class="modal" id="reviewModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeModal('reviewModal')">×</button>
+      <h2>Rate your session</h2>
+      <p>Your feedback improves tutor quality and future AI matching.</p>
+      <div class="rating-stars" id="ratingStars">
+        <button onclick="setRating(1)">★</button><button onclick="setRating(2)">★</button><button onclick="setRating(3)">★</button><button onclick="setRating(4)">★</button><button onclick="setRating(5)">★</button>
+      </div>
+      <textarea id="reviewText" rows="4" placeholder="What was useful? What could be better?"></textarea>
+      <button class="btn primary full" onclick="submitReview()">Submit Feedback</button>
     </div>
   </div>
 
